@@ -19,7 +19,6 @@ EXTENSION="$1"
 FILENAME="$2"
 NUMARGS="$#"
 ARGS=("$@")
-# ${ARGS[1]}
 
 HTMLBASE="<!doctype html>\n\n<html lang="en">\n\t<head>\n\t\t<title>Title Here</title>\n\t</head>\n\n\t<body>\n\t\t\n\t</body>\n</html>"
 
@@ -30,27 +29,26 @@ then
 	if [ "$EXTENSION" = "html" ]
 	then
 		#Case of no options, just a blank html doc
+		echo "Writing HTML"
+		echo -e "$HTMLBASE" > "$FILENAME.$EXTENSION"
 		
-			echo -e "$HTMLBASE" > "$FILENAME.$EXTENSION"
-		
-
 		#Loop through options starting at ARGS[2] adding features as we go
 		for (( i=2;i<${#ARGS[@]};i++)); do
 			if [ "${ARGS[${i}]}" = "ng" ]
 			then
-				echo "adding ng framework"
-				#sed bug prevents newline insertion in some distros, so try using perl. otherwise, using more than one option will just overwrite the previous one
-				
+				echo "adding ng framework"	
 
-				NGURL="<script src=\"https:\/\/ajax.googleapis.com\/ajax\/libs\/angularjs\/1.5.2\/angular.min.js\"><\/script>\n"
+				NGURL="<script src=\"https:\/\/ajax.googleapis.com\/ajax\/libs\/angularjs\/1.5.2\/angular.min.js\"><\/script>\n\t\t<title>"
 				
-				echo -e "$HTMLBASE" | sed "s/<title>/\\$NGURL&\ /g" > "$FILENAME.$EXTENSION"	
+				perl -p -i -e "s/<title>/$NGURL/" "$FILENAME.$EXTENSION"
 
 			elif [ "${ARGS[${i}]}" = "bootstrap" ]
 			then
 				echo "adding boostrap library"
-				NGURL="<link rel=\"stylesheet\" href=\"https:\/\/maxcdn.bootstrapcdn.com\/bootstrap\/3.3.6\/css\/bootstrap.min.css\" integrity=\"sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7\" crossorigin=\"anonymous\">"
-				echo -e "$HTMLBASE" | sed "s/<title>/\\$NGURL&\ /g" > "$FILENAME.$EXTENSION"
+				
+				NGURL="<link rel=\"stylesheet\" href=\"https:\/\/maxcdn.bootstrapcdn.com\/bootstrap\/3.3.6\/css\/bootstrap.min.css\" integrity=\"sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7\" crossorigin=\"anonymous\">\n\t\t<title>"
+
+				perl -p -i -e "s/<title>/$NGURL/" "$FILENAME.$EXTENSION"
 			fi
 		done 
 		
