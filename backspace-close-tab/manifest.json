@@ -1,0 +1,16 @@
+{
+  "name": "Backspace Closes Tab",
+  "version": "1.0",
+  "manifest_version": 4,
+  "description": "Closes a tab containing no further history upon a double backspace tap. Great for navigating google news with one hand while eating breakfast with the other.",
+  "homepage_url": "http://github.com/davidcashin/",
+  "background": {
+    "scripts": ["inject.js"]
+  },
+  "permissions": [
+    "<all_urls>",
+    "tabs",
+    "storage",
+    "unlimitedStorage"
+  ]
+}
