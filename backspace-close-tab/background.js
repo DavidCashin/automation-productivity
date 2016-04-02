@@ -4,8 +4,10 @@ chrome.storage.sync.get({allKeys: false}, function(settings) {
         //record the first tap of a potential double tap as well as the time between those taps
         var alreadyPressed = false;
         var initialTime = 0;
-        document.addEventListener('keydown', function () {            
-            if (window.event.keyCode == 8) {
+        document.addEventListener('keydown', function () {
+            var elementType = document.activeElement.type;    
+            //make sure we aren't typing something in a textbox or text area    
+            if (window.event.keyCode == 8 && elementType != "text" && elementType != "textarea") {  
                 //backspace key detected
                 var currentTime = new Date().getTime();
                 var timeSinceFirstPress = currentTime - initialTime;
