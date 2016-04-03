@@ -13,14 +13,14 @@
 #		-ng
 #			generates AngularJS script calling the framework, as well as some directive tags
 #		-bootstrap
-#			generates a script tag calling the bootstrap library
+#			generates a script tag calling the bootstrap framework
 
 EXTENSION="$1"
 FILENAME="$2"
 NUMARGS="$#"
 ARGS=("$@")
 
-HTMLBASE="<!doctype html>\n\n<html lang="en">\n\t<head>\n\t\t<title>Title Here</title>\n\t</head>\n\n\t<body>\n\t\t\n\t</body>\n</html>"
+HTMLBASE="<!doctype html>\n\n<html lang=\"en\">\n\t<head>\n\t\t<meta name=\"description\" content=\"website description\">\n\t\t<meta name=\"keywords\" content=\"HTML,CSS,XML,JavaScript\">\n\t\t<meta name=\"author\" content=\"David Cashin\">\n\n\t\t<title>Title Here</title>\n\t</head>\n\n\t<body>\n\t\t\n\t</body>\n</html>"
 
 if [ "$NUMARGS" -gt 0 ]
 then
@@ -44,7 +44,7 @@ then
 
 			elif [ "${ARGS[${i}]}" = "bootstrap" ]
 			then
-				echo "adding boostrap library"
+				echo "adding boostrap framework"
 				
 				NGURL="<link rel=\"stylesheet\" href=\"https:\/\/maxcdn.bootstrapcdn.com\/bootstrap\/3.3.6\/css\/bootstrap.min.css\" integrity=\"sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7\" crossorigin=\"anonymous\">\n\t\t<title>"
 
@@ -55,4 +55,6 @@ then
 	else 
 		echo "No knowledge of this extension"
 	fi
+else
+	echo "Arguments are in the format of [extension] [file name] [options]"
 fi
