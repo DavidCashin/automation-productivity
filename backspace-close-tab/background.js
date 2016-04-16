@@ -5,9 +5,10 @@ chrome.storage.sync.get({allKeys: false}, function(settings) {
         var alreadyPressed = false;
         var initialTime = 0;
         document.addEventListener('keydown', function () {
-            var elementType = document.activeElement.type;    
+            var elementType = document.activeElement.type;
+
             //make sure we aren't typing something in a textbox or text area    
-            if (window.event.keyCode == 8 && elementType != "text" && elementType != "textarea") {  
+            if (window.event.keyCode == 8 && elementType != "text" && elementType != "textarea" && !hasTextRole(document.activeElement)) {  
                 //backspace key detected
                 var currentTime = new Date().getTime();
                 var timeSinceFirstPress = currentTime - initialTime;
@@ -22,5 +23,17 @@ chrome.storage.sync.get({allKeys: false}, function(settings) {
                 }
             }
         });
-});
+
+        //searches nonconventional dom structure for a role with 'textbox' value (ie, facebook)
+        function hasTextRole(domNode){
+            var hasRole = false;
+
+            if(domNode.getAttribute("role") == "textbox"){
+                hasRole = true;
+            }
+
+            return hasRole;
+        }
+
+    });
 
